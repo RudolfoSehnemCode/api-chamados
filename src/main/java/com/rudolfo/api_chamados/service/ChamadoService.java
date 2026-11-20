@@ -1,5 +1,6 @@
 package com.rudolfo.api_chamados.service;
 
+import com.rudolfo.api_chamados.exception.RegraNegocioException;
 import com.rudolfo.api_chamados.model.Chamado;
 import com.rudolfo.api_chamados.model.Status;
 import com.rudolfo.api_chamados.repository.ChamadoRepository;
@@ -32,7 +33,7 @@ public class ChamadoService {
     public Chamado fecharChamado(Long id){
         Chamado chamado = chamadoRepository.findById(id).orElseThrow();
         if(chamado.getStatus() == Status.FECHADO){
-            throw new RuntimeException("Chamado já fechado");
+            throw new RegraNegocioException("Chamado já fechado");
         }
         chamado.setStatus(Status.FECHADO);
         chamado.setDataFechamento(LocalDateTime.now());
