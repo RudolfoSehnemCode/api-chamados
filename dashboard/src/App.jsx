@@ -29,38 +29,68 @@ function App() {
   const dadosPorSetor = Object.entries(contagemPorSetor).map(([setor, total]) => ({
     setor,
     total,
-  }));
+  }
+));
 
+  const contagemPorCategoria = {};
 
+  chamados.forEach((chamado) => {
+    const categoria = chamado.categoria;
+    contagemPorCategoria[categoria] = (contagemPorCategoria[categoria] || 0) + 1;
+  });
+
+  const dadosPorCategoria = Object.entries(contagemPorCategoria).map(([categoria, total]) => ({
+    categoria,
+    total,
+  }
+));
+ 
+  
   return (
-    <main>
-      <h1>Dashboard de Chamados</h1>
-      <div>
+  <main>
+    <h1>Dashboard de Chamados</h1>
+
+    <div className="cards">
+      <div className="card">
         <h2>Total</h2>
         <p>{chamados.length}</p>
       </div>
-      <div>
+      <div className="card">
         <h2>Abertos</h2>
         <p>{abertos.length}</p>
       </div>
-      <div>
+      <div className="card">
         <h2>Fechados</h2>
         <p>{fechados.length}</p>
       </div>
-      <div>
-        <h2>Chamados por setor</h2>
+    </div>
+
+    <div className="grafico">
+      <h2>Chamados por setor</h2>
+      <ResponsiveContainer width="100%" height={300}>
+        <BarChart data={dadosPorSetor}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="setor" />
+          <YAxis />
+          <Tooltip />
+          <Bar dataKey="total" fill="#4f46e5" />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+    <div className="grafico">
+      <h2>Chamados por categoria</h2>
         <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={dadosPorSetor}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="setor" />
-            <YAxis />
-            <Tooltip />
-            <Bar dataKey="total" fill="#4f46e5" />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
-    </main>
-  );
+        <BarChart data={dadosPorCategoria}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="categoria" />
+          <YAxis />
+          <Tooltip />
+          <Bar dataKey="total" fill="#16a34a" />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+  </main>
+);
 }
 
 
