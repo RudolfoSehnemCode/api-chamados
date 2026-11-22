@@ -30,7 +30,7 @@ function App() {
     setor,
     total,
   }
-));
+  ));
 
   const contagemPorCategoria = {};
 
@@ -43,54 +43,70 @@ function App() {
     categoria,
     total,
   }
-));
- 
-  
+  ));
+
+  let tempoFechamento = 0;
+
+  fechados.forEach((chamado) => {
+    const abertura = new Date(chamado.dataAbertura);
+    const fechamento = new Date(chamado.dataFechamento);
+    tempoFechamento += fechamento - abertura;
+
+  })
+
+  const tempoMedioHoras = tempoFechamento / fechados.length / 1000 / 60 / 60;
+
+
   return (
-  <main>
-    <h1>Dashboard de Chamados</h1>
+    <main>
+      <h1>Dashboard de Chamados</h1>
 
-    <div className="cards">
-      <div className="card">
-        <h2>Total</h2>
-        <p>{chamados.length}</p>
+      <div className="cards">
+        <div className="card">
+          <h2>Total</h2>
+          <p>{chamados.length}</p>
+        </div>
+        <div className="card">
+          <h2>Abertos</h2>
+          <p>{abertos.length}</p>
+        </div>
+        <div className="card">
+          <h2>Fechados</h2>
+          <p>{fechados.length}</p>
+        </div>
+        <div className="card">
+          <h2>Tempo médio de resolução</h2>
+          <p>{tempoMedioHoras.toFixed(1)}h </p>
+        </div>
       </div>
-      <div className="card">
-        <h2>Abertos</h2>
-        <p>{abertos.length}</p>
-      </div>
-      <div className="card">
-        <h2>Fechados</h2>
-        <p>{fechados.length}</p>
-      </div>
-    </div>
 
-    <div className="grafico">
-      <h2>Chamados por setor</h2>
-      <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={dadosPorSetor}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="setor" />
-          <YAxis />
-          <Tooltip />
-          <Bar dataKey="total" fill="#4f46e5" />
-        </BarChart>
-      </ResponsiveContainer>
-    </div>
-    <div className="grafico">
-      <h2>Chamados por categoria</h2>
+      <div className="grafico">
+        <h2>Chamados por setor</h2>
         <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={dadosPorCategoria}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="categoria" />
-          <YAxis />
-          <Tooltip />
-          <Bar dataKey="total" fill="#16a34a" />
-        </BarChart>
-      </ResponsiveContainer>
-    </div>
-  </main>
-);
+          <BarChart data={dadosPorSetor}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="setor" />
+            <YAxis />
+            <Tooltip />
+            <Bar dataKey="total" fill="#4f46e5" />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+      <div className="grafico">
+        <h2>Chamados por categoria</h2>
+        <ResponsiveContainer width="100%" height={300}>
+          <BarChart data={dadosPorCategoria}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="categoria" />
+            <YAxis />
+            <Tooltip />
+            <Bar dataKey="total" fill="#16a34a" />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+
+    </main>
+  );
 }
 
 
