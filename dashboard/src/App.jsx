@@ -68,8 +68,22 @@ function App() {
     total,
   })).sort((a, b) => a.mes.localeCompare(b.mes));
 
+  const contagemPorHora = {};
+
+  chamados.forEach((chamado) => {
+    const pico = new Date(chamado.dataAbertura).getHours();
+    contagemPorHora[pico] = (contagemPorHora[pico] || 0) + 1;
+  })
+
+  const dadosPorHora = Object.entries(contagemPorHora).map(([hora, total]) => ({
+    hora,
+    total,
+  })).sort((a, b) => a.hora - b.hora);
+
   return (
     <main>
+      <div className="graficos">
+
       <h1>Dashboard de Chamados</h1>
 
       <div className="cards">
@@ -127,6 +141,20 @@ function App() {
           </LineChart>
         </ResponsiveContainer>
       </div>
+      <div className="grafico">
+        <h2>Horparios de pico</h2>
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart data={dadosPorHora}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="hora" tickFormatter={(hora) => `${hora}h`} />
+            <YAxis />
+            <Tooltip />
+            <Line dataKey="total" stroke="#e11d48" type="linear"/>
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
+      </div>
+      
 
     </main>
   );
