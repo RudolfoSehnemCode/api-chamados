@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, LineChart, Line } from "recharts";
 
 function App() {
 
@@ -56,6 +56,17 @@ function App() {
 
   const tempoMedioHoras = tempoFechamento / fechados.length / 1000 / 60 / 60;
 
+  const contagemPorMes = {};
+  
+  chamados.forEach((chamado) => {
+    const mes = chamado.dataAbertura.slice(0, 7);
+    contagemPorMes[mes] = (contagemPorMes[mes] || 0) + 1;
+  })
+
+  const dadosPorMes = Object.entries(contagemPorMes).map(([mes, total]) => ({
+    mes,
+    total,
+  })).sort((a, b) => a.mes.localeCompare(b.mes));
 
   return (
     <main>
@@ -102,6 +113,18 @@ function App() {
             <Tooltip />
             <Bar dataKey="total" fill="#16a34a" />
           </BarChart>
+        </ResponsiveContainer>
+      </div>
+       <div className="grafico">
+        <h2>Chamados por Mês</h2>
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart data={dadosPorMes}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="mes" />
+            <YAxis />
+            <Tooltip />
+            <Line dataKey="total" stroke="#f59e0b" type="monotone" />
+          </LineChart>
         </ResponsiveContainer>
       </div>
 
