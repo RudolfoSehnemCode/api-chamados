@@ -6,8 +6,8 @@
 
 body {
   font-family: system-ui, sans-serif;
-  background: #f1f5f9;
-  color: #0f172a;
+  background: #1c1c22;
+  color: #e5e7eb;
 }
 
 main {
@@ -18,7 +18,16 @@ main {
 
 h1 {
   font-size: 28px;
-  margin-bottom: 24px;
+  margin-bottom: 4px;
+}
+
+.cabecalho {
+  margin-bottom: 8px;
+}
+
+.periodo {
+  font-size: 14px;
+  color: #a1a1aa;
 }
 
 .cards {
@@ -30,16 +39,17 @@ h1 {
 
 .card,
 .grafico {
-  background: white;
+  background: #2a2a31;
+  border: 1px solid #3a3a42;
   border-radius: 12px;
   padding: 20px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 .card h2 {
   font-size: 14px;
   font-weight: 500;
-  color: #64748b;
+  color: #a1a1aa;
   margin-bottom: 8px;
 }
 
@@ -61,4 +71,37 @@ h1 {
 
 .grafico {
   min-width: 0;
+}
+/* Recharts no tema escuro */
+.recharts-cartesian-grid line {
+  stroke: #3f3f46;
+}
+
+.recharts-cartesian-axis-tick-value {
+  fill: #a1a1aa;
+}
+
+.recharts-default-tooltip {
+  background: #2a2a31 !important;
+  border-color: #3f3f46 !important;
+  color: #e5e7eb;
+}
+
+.recharts-legend-item-text {
+  color: #e5e7eb !important;
+}
+
+rect.recharts-tooltip-cursor {
+  fill: #3a3a42;
+}
+
+select {
+  background: #2a2a31;
+  color: #e5e7eb;
+  border: 1px solid #3a3a42;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 14px;
+  margin-bottom: 24px;
+  cursor: pointer;
 }
